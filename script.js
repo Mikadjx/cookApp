@@ -20,8 +20,29 @@ function updateResults() {
   }
 }
 
+// Fonction pour afficher les détails dans une popup
+function showDetails(title, description, imageUrl) {
+  const popup = document.getElementById("popup");
+  const popupTitle = document.getElementById("popup-title");
+  const popupDescription = document.getElementById("popup-description");
+  const popupImage = document.getElementById("popup-image");
 
-// Événement pour les boutons de vote
+  // Mise à jour des éléments de la popup
+  popupTitle.textContent = title;
+  popupDescription.textContent = description;
+  popupImage.src = imageUrl;
+
+  // Affiche la popup
+  popup.classList.remove("hidden");
+}
+
+// Fonction pour fermer la popup
+function closePopup() {
+  const popup = document.getElementById("popup");
+  popup.classList.add("hidden");
+}
+
+// Gestion des clics sur les boutons de vote
 document.querySelectorAll(".vote-btn").forEach((button) => {
   button.addEventListener("click", (event) => {
     if (hasVoted) {
@@ -45,10 +66,21 @@ document.querySelectorAll(".vote-btn").forEach((button) => {
 
     // Vérifie si le seuil de votes est atteint
     if (totalVotes === 11) {
-      alertAndSendEmail();
+      alert("Seuil de 11 votes atteint !");
     }
 
-    event.stopPropagation();
+    event.stopPropagation(); // Empêche le clic sur le bouton d'affecter la card
+  });
+});
+
+// Gestion des clics sur les cards pour afficher la popup
+document.querySelectorAll(".menu-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    const title = card.querySelector(".card-title").textContent;
+    const description = card.getAttribute("data-description");
+    const imageUrl = card.querySelector(".card-img-top").src;
+
+    showDetails(title, description, imageUrl);
   });
 });
 
