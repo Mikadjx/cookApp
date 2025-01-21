@@ -1,37 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vote pour votre plat préféré</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="container">
-    <h1>🍴 Quel plat préférez-vous ? 🍴</h1>
-    <p>Votez pour le plat que vous aimeriez acheter !</p>
-    <div class="options">
-      <div class="option" data-choice="Bœuf Bourguignon">
-        <img src="boeuf-bourguignon.jpg" alt="Bœuf Bourguignon">
-        <p>Bœuf Bourguignon</p>
-        <button class="vote-btn">Vote</button>
+    <h1>Salut tout le monde !! 👋</h1>
+    <p>
+      Je lance un sondage pour savoir quel <b>plat maison</b> vous aimeriez que je prépare pour le repas de vendredi
+      midi 🍽️ !
+    </p>
+    <div class="row">
+      <!-- Card 1 -->
+      <div class="col-md-4">
+        <div class="card menu-card" onclick="showDetails(
+          'Bœuf Bourguignon',
+          'Le Bœuf Bourguignon est un incontournable de la cuisine française. Préparé avec des morceaux de bœuf mijotés lentement dans du vin rouge, des carottes, des oignons, et des herbes de Provence, ce plat offre une saveur riche et réconfortante. Servi avec des pommes de terre vapeur ou du pain frais pour profiter de la sauce onctueuse.',
+          './image/boeufBourguignon.jpg')">
+          <img class="card-img-top" src="./image/boeufBourguignon.jpg" alt="Bœuf Bourguignon">
+          <div class="card-body">
+            <h5 class="card-title">Bœuf Bourguignon</h5>
+            <p class="card-text">Un classique mijoté au vin rouge et légumes 🥩🍷</p>
+            <button class="btn btn-primary vote-btn" data-choice="Bœuf Bourguignon">Vote</button>
+          </div>
+        </div>
       </div>
-      <div class="option" data-choice="Blanquette de Veau">
-        <img src="blanquette-veau.jpg" alt="Blanquette de Veau">
-        <p>Blanquette de Veau</p>
-        <button class="vote-btn">Vote</button>
+      <!-- Card 2 -->
+      <div class="col-md-4">
+        <div class="card menu-card" onclick="showDetails(
+          'Blanquette de Veau',
+          'La Blanquette de Veau est un plat traditionnel français, composé de morceaux tendres de veau cuits dans une sauce crémeuse à base de bouillon, de crème fraîche, et de jaunes d’œufs. Accompagnée de riz ou de légumes croquants, cette recette est idéale pour un repas réconfortant et gourmand.',
+          './image/blanquetteVeau.webp')">
+          <img class="card-img-top" src="./image/blanquetteVeau.webp" alt="Blanquette de Veau">
+          <div class="card-body">
+            <h5 class="card-title">Blanquette de Veau</h5>
+            <p class="card-text">Un plat crémeux avec riz ou légumes 🐄</p>
+            <button class="btn btn-primary vote-btn" data-choice="Blanquette de Veau">Vote</button>
+          </div>
+        </div>
       </div>
-      <div class="option" data-choice="Ají de Gallina">
-        <img src="aji-de-gallina.jpg" alt="Ají de Gallina">
-        <p>Ají de Gallina</p>
-        <button class="vote-btn">Vote</button>
+      <!-- Card 3 -->
+      <div class="col-md-4">
+        <div class="card menu-card" onclick="showDetails(
+          'Ají de Gallina',
+          'L’Ají de Gallina est un plat typique du Pérou, à base de poulet effiloché dans une sauce crémeuse préparée avec du ají amarillo (un piment jaune doux), du lait évaporé, du pain, et des épices. Il est généralement servi avec du riz et des pommes de terre, et garni d’olives noires et d’œufs durs pour une touche authentique.',
+          './image/aji_de_gallina.jpg')">
+          <img class="card-img-top" src="./image/aji_de_gallina.jpg" alt="Ají de Gallina">
+          <div class="card-body">
+            <h5 class="card-title">Ají de Gallina</h5>
+            <p class="card-text">Un délicieux plat péruvien au ají amarillo 🌶️</p>
+            <button class="btn btn-primary vote-btn" data-choice="Ají de Gallina">Vote</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="result">
+    <p class="mt-4"><b>Prix :</b> <span class="price">10€ la part</span>, bien servie🔥</p>
+    <div id="result" class="mt-4">
       <h2>Résultat actuel :</h2>
       <ul id="result-list"></ul>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Popup -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">✖</span>
+      <h2 id="popup-title"></h2>
+      <img id="popup-image" alt="Popup Image">
+      <p id="popup-description"></p>
+    </div>
+  </div>
+
+  <script defer src="./script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
