@@ -104,3 +104,7 @@ h1 {
 #result-list {
   list-style: none;
 }
+
+#chifoumi {
+  display: none;
+}

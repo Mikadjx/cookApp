@@ -5,10 +5,13 @@ const votes = {
   "Ají de Gallina": 0,
 };
 
-// Update the results display
+let totalVotes = 0; // Compteur de votes total
+let hasVoted = false; // Vérifie si l'utilisateur a déjà voté
+
+// Mise à jour des résultats affichés
 function updateResults() {
   const resultList = document.getElementById("result-list");
-  resultList.innerHTML = ""; // Clear the list
+  resultList.innerHTML = "";
 
   for (const [choice, count] of Object.entries(votes)) {
     const listItem = document.createElement("li");
@@ -17,30 +20,58 @@ function updateResults() {
   }
 }
 
-// Show details in popup
-function showDetails(title, description, imageUrl) {
-  document.getElementById("popup-title").textContent = title;
-  document.getElementById("popup-description").textContent = description;
-  document.getElementById("popup-image").src = imageUrl;
-
-  document.getElementById("popup").classList.remove("hidden");
+// Fonction pour alerter et envoyer un email
+function alertAndSendEmail() {
+  alert("Le seuil de 11 votes a été atteint ! Un email sera envoyé à chacun.");
+  
+  // Envoi d'une requête au serveur pour envoyer des emails
+  fetch("http://votre-serveur-api/send-email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      message: "Le seuil de 11 votes a été atteint !",
+      recipients: [
+        "email1@cesi.fr",
+        "email2@cesi.fr",
+        "email3@cesi.fr", // Ajoutez ici tous les emails
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Emails envoyés avec succès :", data);
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'envoi des emails :", error);
+    });
 }
 
-// Close popup
-function closePopup() {
-  document.getElementById("popup").classList.add("hidden");
-}
-
-// Add click event to vote buttons
+// Événement pour les boutons de vote
 document.querySelectorAll(".vote-btn").forEach((button) => {
   button.addEventListener("click", (event) => {
+    if (hasVoted) {
+      alert("Vous avez déjà voté. Merci pour votre participation !");
+      return;
+    }
+
     const choice = button.dataset.choice;
     votes[choice]++;
+    totalVotes++;
     updateResults();
     alert(`Merci pour votre vote ! Vous avez choisi : ${choice}`);
-    event.stopPropagation(); // Prevent triggering card click
+    hasVoted = true;
+
+    // Vérifie si le seuil est atteint
+    if (totalVotes === 11) {
+      alertAndSendEmail();
+    }
+
+    event.stopPropagation();
   });
 });
 
-// Initialize results display
+// Initialisation des résultats affichés
 updateResults();
+
