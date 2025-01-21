@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote pour votre plat préféré</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🍴 Quel plat préférez-vous ? 🍴</h1>
+    <p>Votez pour le plat que vous aimeriez acheter !</p>
+    <div class="options">
+      <div class="option" data-choice="Bœuf Bourguignon">
+        <img src="boeuf-bourguignon.jpg" alt="Bœuf Bourguignon">
+        <p>Bœuf Bourguignon</p>
+        <button class="vote-btn">Vote</button>
+      </div>
+      <div class="option" data-choice="Blanquette de Veau">
+        <img src="blanquette-veau.jpg" alt="Blanquette de Veau">
+        <p>Blanquette de Veau</p>
+        <button class="vote-btn">Vote</button>
+      </div>
+      <div class="option" data-choice="Ají de Gallina">
+        <img src="aji-de-gallina.jpg" alt="Ají de Gallina">
+        <p>Ají de Gallina</p>
+        <button class="vote-btn">Vote</button>
+      </div>
+    </div>
+    <div id="result">
+      <h2>Résultat actuel :</h2>
+      <ul id="result-list"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
