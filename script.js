@@ -1,12 +1,12 @@
-// Initial votes
-const votes = {
+// Initialisation des votes
+let votes = JSON.parse(localStorage.getItem("votes")) || {
   "Bœuf Bourguignon": 0,
   "Blanquette de Veau": 0,
   "Ají de Gallina": 0,
 };
 
-let totalVotes = 0; // Compteur de votes total
-let hasVoted = false; // Vérifie si l'utilisateur a déjà voté
+let totalVotes = parseInt(localStorage.getItem("totalVotes")) || 0;
+let hasVoted = localStorage.getItem("hasVoted") === "true"; // Vérifie si l'utilisateur a déjà voté
 
 // Mise à jour des résultats affichés
 function updateResults() {
@@ -20,33 +20,6 @@ function updateResults() {
   }
 }
 
-// Fonction pour alerter et envoyer un email
-function alertAndSendEmail() {
-  alert("Le seuil de 11 votes a été atteint ! Un email sera envoyé à chacun.");
-  
-  // Envoi d'une requête au serveur pour envoyer des emails
-  fetch("http://votre-serveur-api/send-email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      message: "Le seuil de 11 votes a été atteint !",
-      recipients: [
-        "email1@cesi.fr",
-        "email2@cesi.fr",
-        "email3@cesi.fr", // Ajoutez ici tous les emails
-      ],
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Emails envoyés avec succès :", data);
-    })
-    .catch((error) => {
-      console.error("Erreur lors de l'envoi des emails :", error);
-    });
-}
 
 // Événement pour les boutons de vote
 document.querySelectorAll(".vote-btn").forEach((button) => {
@@ -59,11 +32,18 @@ document.querySelectorAll(".vote-btn").forEach((button) => {
     const choice = button.dataset.choice;
     votes[choice]++;
     totalVotes++;
-    updateResults();
-    alert(`Merci pour votre vote ! Vous avez choisi : ${choice}`);
     hasVoted = true;
 
-    // Vérifie si le seuil est atteint
+    // Stocker les résultats localement
+    localStorage.setItem("votes", JSON.stringify(votes));
+    localStorage.setItem("totalVotes", totalVotes);
+    localStorage.setItem("hasVoted", "true");
+
+    updateResults();
+
+    alert(`Merci pour votre vote ! Vous avez choisi : ${choice}`);
+
+    // Vérifie si le seuil de votes est atteint
     if (totalVotes === 11) {
       alertAndSendEmail();
     }
@@ -74,4 +54,3 @@ document.querySelectorAll(".vote-btn").forEach((button) => {
 
 // Initialisation des résultats affichés
 updateResults();
-
